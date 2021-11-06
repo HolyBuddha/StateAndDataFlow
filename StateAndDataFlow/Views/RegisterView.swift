@@ -11,7 +11,7 @@ struct RegisterView: View {
     @State private var userName = ""
     @StateObject private var userNameCounter = UserNameCounter()
     
-    @EnvironmentObject private var user: UserManager
+    @EnvironmentObject private var dataManager: DataManager
     
     var body: some View {
         VStack {
@@ -29,7 +29,6 @@ struct RegisterView: View {
                 HStack {
                     Image(systemName: "checkmark.circle")
                     Text("OK")
-                    
                 }
                 .foregroundColor(userNameCounter.changeColorForButton(userName.count))
             }
@@ -39,8 +38,7 @@ struct RegisterView: View {
     
     private func registerUser() {
         if userName.count >= 3 {
-            user.name = userName
-            user.isRegistered.toggle()
+            dataManager.createNewUser(userName)
         } else {
             return
         }
